@@ -6,8 +6,6 @@ from io import BytesIO
 from Crypto.Cipher import AES
 
 
-
-
 class Funcaptcha:
     def __init__(self, api_url, api_key, site_url):
         self.base_url = api_url,
@@ -16,7 +14,7 @@ class Funcaptcha:
 
         self.session = requests.Session()
         self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
-        self.pyjs = execjs.compile(open("fingerprintp.js").read())
+        self.pyjs = execjs.compile(open("./src/fingerprint.js").read())
 
     @staticmethod
     def _encrypt(data, key):
