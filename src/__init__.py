@@ -5,8 +5,8 @@ from PIL import Image
 from io import BytesIO
 from Crypto.Cipher import AES
 
-with open("fp.js") as f:
-    mm3js = execjs.compile(f.read())
+
+
 
 class Funcaptcha:
     def __init__(self, api_url, api_key, site_url):
@@ -16,6 +16,7 @@ class Funcaptcha:
 
         self.session = requests.Session()
         self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
+        self.pyjs = execjs.compile(open("fingerprintp.js").read())
 
     @staticmethod
     def _encrypt(data, key):
@@ -68,7 +69,7 @@ class Funcaptcha:
         ]
 
         fp = secrets.token_hex(16)
-        ife_hash = mm3js.call("x64hash128", ", ".join(fe), 38)
+        ife_hash = self.pyjs.call("x64hash128", ", ".join(fe), 38)
         wh = secrets.token_hex(16) + "|" + secrets.token_hex(16)
 
         data.append({"key": "f", "value": fp})
