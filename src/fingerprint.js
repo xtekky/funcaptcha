@@ -1,11 +1,4 @@
-
-  /// MurmurHash3 related functions
-
-  //
-  // Given two 64bit ints (as an array of two 32bit ints) returns the two
-  // added together as a 64bit int (as an array of two 32bit ints).
-  //
-  var x64Add = function (m, n) {
+var x64Add = function (m, n) {
     m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff]
     n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff]
     var o = [0, 0, 0, 0]
@@ -23,11 +16,7 @@
     return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]]
   }
 
-  //
-  // Given two 64bit ints (as an array of two 32bit ints) returns the two
-  // multiplied together as a 64bit int (as an array of two 32bit ints).
-  //
-  var x64Multiply = function (m, n) {
+var x64Multiply = function (m, n) {
     m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff]
     n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff]
     var o = [0, 0, 0, 0]
@@ -53,12 +42,8 @@
     o[0] &= 0xffff
     return [(o[0] << 16) | o[1], (o[2] << 16) | o[3]]
   }
-  //
-  // Given a 64bit int (as an array of two 32bit ints) and an int
-  // representing a number of bit positions, returns the 64bit int (as an
-  // array of two 32bit ints) rotated left by that number of positions.
-  //
-  var x64Rotl = function (m, n) {
+
+var x64Rotl = function (m, n) {
     n %= 64
     if (n === 32) {
       return [m[1], m[0]]
@@ -69,12 +54,8 @@
       return [(m[1] << n) | (m[0] >>> (32 - n)), (m[0] << n) | (m[1] >>> (32 - n))]
     }
   }
-  //
-  // Given a 64bit int (as an array of two 32bit ints) and an int
-  // representing a number of bit positions, returns the 64bit int (as an
-  // array of two 32bit ints) shifted left by that number of positions.
-  //
-  var x64LeftShift = function (m, n) {
+
+var x64LeftShift = function (m, n) {
     n %= 64
     if (n === 0) {
       return m
@@ -84,18 +65,11 @@
       return [m[1] << (n - 32), 0]
     }
   }
-  //
-  // Given two 64bit ints (as an array of two 32bit ints) returns the two
-  // xored together as a 64bit int (as an array of two 32bit ints).
-  //
+
   var x64Xor = function (m, n) {
     return [m[0] ^ n[0], m[1] ^ n[1]]
   }
-  //
-  // Given a block, returns murmurHash3's final x64 mix of that block.
-  // (`[0, h[0] >>> 1]` is a 33 bit unsigned right shift. This is the
-  // only place where we need to right shift 64bit ints.)
-  //
+
   var x64Fmix = function (h) {
     h = x64Xor(h, [0, h[0] >>> 1])
     h = x64Multiply(h, [0xff51afd7, 0xed558ccd])
@@ -105,10 +79,6 @@
     return h
   }
 
-  //
-  // Given a string and an optional seed as an int, returns a 128 bit
-  // hash using the x64 flavor of MurmurHash3, as an unsigned hex.
-  //
   var x64hash128 = function (key, seed) {
     key = key || ''
     seed = seed || 0
@@ -165,35 +135,26 @@
         k2 = x64Rotl(k2, 33)
         k2 = x64Multiply(k2, c1)
         h2 = x64Xor(h2, k2)
-      // fallthrough
       case 8:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 7)], 56))
-      // fallthrough
       case 7:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 6)], 48))
-      // fallthrough
       case 6:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 5)], 40))
-      // fallthrough
       case 5:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 4)], 32))
-      // fallthrough
       case 4:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 3)], 24))
-      // fallthrough
       case 3:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 2)], 16))
-      // fallthrough
       case 2:
         k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 1)], 8))
-      // fallthrough
       case 1:
         k1 = x64Xor(k1, [0, key.charCodeAt(i)])
         k1 = x64Multiply(k1, c1)
         k1 = x64Rotl(k1, 31)
         k1 = x64Multiply(k1, c2)
         h1 = x64Xor(h1, k1)
-      // fallthrough
     }
     h1 = x64Xor(h1, [0, key.length])
     h2 = x64Xor(h2, [0, key.length])
