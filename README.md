@@ -1,11 +1,13 @@
 # funcaptcha under developement
 feel free to commit
 
-
+## install funcaptcha
+```
+pip install funcaptcha
+```
 ## current example (get key)
-
 ```python
-from src.__init__ import Funcaptcha
+from funcaptcha import Funcaptcha
 
 funcap = Funcaptcha(
     api_url  = 'twitch-api.arkoselabs.com',
