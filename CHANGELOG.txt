@@ -1,0 +1,40 @@
+Change Log
+==========
+
+0.0.1 (06/14/2022)
+-----------------
+- First Release
+
+0.0.2 (06/14/2022)
+-----------------
+- name fix
+
+0.0.3 (06/14/2022)
+-----------------
+- attempting to fix .js file not being recognized
+
+0.0.4 (06/14/2022)
+-----------------
+- attempting to fix .js file not being recognized again...
+
+
+0.0.5 (06/14/2022)
+-----------------
+- attempting to fix .js file not being recognized again... v2
+
+
+0.0.7 (06/14/2022)
+-----------------
+- temp fix where it automatically writes to .js file if not exists
+
+0.0.8 (06/14/2022)
+-----------------
+- more bug fixes
+
+0.0.9 (06/14/2022)
+-----------------
+- even more bug fixes
+
+0.1.0 (06/14/2022)
+-----------------
+- first stable Release, fixed fingerprint.js issue
