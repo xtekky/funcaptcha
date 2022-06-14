@@ -16,8 +16,8 @@ class Funcaptcha:
         self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
 
         if not os.path.exists("./fingerprint.js"):
-            data = requests.get("https://github.com/xtekky/funcaptcha/blob/main/src/fingerprint.js")  #till I manage to upload a .js file, if its not detected, it automatically downloads it from the github repository
-            open("./fingerprint.js", "a").write(data.content)
+            data = requests.get("https://raw.githubusercontent.com/xtekky/funcaptcha/main/src/static/fingerprint.js")  #till I manage to upload a .js file, if its not detected, it automatically downloads it from the github repository
+            open("./fingerprint.js", "a").write(data.text)
 
         self.pyjs = execjs.compile(open("./fingerprint.js").read())
 
