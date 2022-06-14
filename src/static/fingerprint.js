@@ -1,3 +1,10 @@
+  /// MurmurHash3 related functions
+
+  //
+  // Given two 64bit ints (as an array of two 32bit ints) returns the two
+  // added together as a 64bit int (as an array of two 32bit ints).
+  //
+
 var x64Add = function (m, n) {
     m = [m[0] >>> 16, m[0] & 0xffff, m[1] >>> 16, m[1] & 0xffff]
     n = [n[0] >>> 16, n[0] & 0xffff, n[1] >>> 16, n[1] & 0xffff]
