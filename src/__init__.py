@@ -1,4 +1,4 @@
-import requests, random, json, secrets, base64, time, execjs, re, string, hashlib
+import requests, random, json, secrets, base64, time, execjs, re, string, hashlib, os
 from urllib.parse import urlsplit
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from PIL import Image
@@ -14,7 +14,12 @@ class Funcaptcha:
 
         self.session = requests.Session()
         self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36"
-        self.pyjs = execjs.compile(open("./src/fingerprint.js").read())
+
+        if not os.path.exists("./fingerprint.js"):
+            data = requests.get("https://github.com/xtekky/funcaptcha/blob/main/src/fingerprint.js")  #till I manage to upload a .js file, if its not detected, it automatically downloads it from the github repository
+            open("./fingerprint.js", "a").write(data.content)
+
+        self.pyjs = execjs.compile(open("./fingerprint.js").read())
 
     @staticmethod
     def _encrypt(data, key):
