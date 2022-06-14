@@ -5,7 +5,7 @@ feel free to commit
 ```
 pip install funcaptcha
 ```
-## current example (get key)
+## current example (get key - not solved)
 ```python
 from funcaptcha import Funcaptcha
 
