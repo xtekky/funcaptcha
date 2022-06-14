@@ -1,7 +1,7 @@
 Change Log
 ==========
 
-0.0.1 (06/14/2022)
+0.0.1 (05/14/2022)
 -----------------
 - First Release
 
@@ -17,11 +17,9 @@ Change Log
 -----------------
 - attempting to fix .js file not being recognized again...
 
-
 0.0.5 (06/14/2022)
 -----------------
 - attempting to fix .js file not being recognized again... v2
-
 
 0.0.7 (06/14/2022)
 -----------------
@@ -36,5 +34,9 @@ Change Log
 - even more bug fixes
 
 0.1.0 (06/14/2022)
+-----------------
+- more bug fixing
+
+0.1.2 (06/14/2022)
 -----------------
 - first stable Release, fixed fingerprint.js issue
