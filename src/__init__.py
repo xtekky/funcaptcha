@@ -1,6 +1,5 @@
 import requests, random, json, secrets, base64, time, execjs, re, string, hashlib, os
 from urllib.parse import urlsplit
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from PIL import Image
 from io import BytesIO
 from Crypto.Cipher import AES
@@ -94,6 +93,7 @@ class Funcaptcha:
         return Funcaptcha._encrypt(data, key)
 
     def getkey(self):
+        global session_token, region, analytics_tier, lang
 
         bda_value = self.get_browser_data()
 
@@ -118,11 +118,64 @@ class Funcaptcha:
 
         full_token = nc_resp.json()["token"] if 'token' in nc_resp.text else print(' [ x ] Error getting token')
 
-        """
+        
         session_token = full_token.split('|')[0]
         region = full_token.split('|')[1].split("=")[1]
         lang = full_token.split('|')[4].split("=")[1]
         analytics_tier = full_token.split('|')[6].split("=")[1]
-        """
 
         return full_token
+    def get_game_token(self):
+        global game_token
+        self.getkey()
+        data = {
+            "lang": lang,
+            "sid": region,
+            "analytics_tier": analytics_tier,
+            "render_type": "canvas",
+            "token": session_token,
+            "data[status]": "init"
+        }
+        r = self.session.post(
+            url="https://client-api.arkoselabs.com/fc/gfct/",
+            headers = {"Accept": "*/*", "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"},
+            data = data
+        )
+        game_token = r.json()["challengeID"]
+        return game_token
+    def load_game(self):
+        self.get_game_token()
+        data = {
+            "sid": region,
+            "session_token": session_token,
+            "render_type": "canvas",
+            "game_type": "3",
+            "game_token": game_token,
+            "category": "loaded",
+            "analytics_tier": analytics_tier,
+            "action": "game loaded"
+        }
+        r = self.session.post(
+            url = "https://client-api.arkoselabs.com/fc/a/",
+            headers = {"Accept": "*/*", "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"},
+            data = data
+        )
+    def switch_to_audio(self):
+        self.load_game()
+        data = {
+            "sid": region,
+            "session_token": session_token,
+            "render_type": "canvas",
+            "label": "swapped to audio captcha",
+            "game_type": "3",
+            "game_token": game_token,
+            "category": "audio captcha",
+            "analytics_tier": analytics_tier,
+            "action": "user clicked audio"
+        }
+        r = self.session.post(
+            url = "https://client-api.arkoselabs.com/fc/a/",
+            headers = {"Accept": "*/*", "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8", "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36"},
+            data = data
+        )
+        return r.json()
