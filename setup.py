@@ -17,6 +17,6 @@ setup(
     url                  = '',
     packages             = find_packages(),
     license              = 'MIT',
-    install_requires     = ['requests', 'certify', 'idna', 'Pillow', 'pycryptodome', 'PyExecJS', 'urllib3', 'charset-normalizer', 'six'],
+    install_requires     = ['requests', 'certifi', 'idna', 'Pillow', 'pycryptodome', 'PyExecJS', 'urllib3', 'charset-normalizer', 'six'],
     include_package_data = True
     )
