@@ -23,21 +23,18 @@ class Funcaptcha:
 
     @staticmethod
     def _encrypt(data, key):
-        # Padding
-        data = data + chr(16 - len(data) % 16) * (16 - len(data) % 16)
-
+        data += chr(16 - len(data) % 16) * (16 - len(data) % 16)
         salt = b"".join(random.choice(string.ascii_lowercase).encode() for x in range(8))
         salted, dx = b"", b""
         while len(salted) < 48:
             dx = hashlib.md5(dx + key.encode() + salt).digest()
             salted += dx
-
         key = salted[:32]
         iv = salted[32:32 + 16]
         aes = AES.new(key, AES.MODE_CBC, iv)
-
         encrypted_data = {"ct": base64.b64encode(aes.encrypt(data.encode())).decode("utf-8"), "iv": iv.hex(), "s": salt.hex()}
         return json.dumps(encrypted_data, separators=(',', ':'))
+
 
     @staticmethod
     def _decrypt(data, key):
