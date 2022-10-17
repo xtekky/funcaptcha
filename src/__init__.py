@@ -1,10 +1,6 @@
-import requests, random, json, secrets, base64, time, execjs, re, string, hashlib, os
+import base64, execjs, hashlib, json, os, random, requests, secrets, string, time
 from Crypto.Cipher import AES
 from functools import reduce
-from io import BytesIO
-from PIL import Image
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-from urllib.parse import urlsplit
 
 
 class Funcaptcha:
