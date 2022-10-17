@@ -19,3 +19,5 @@ key = funcap.getkey()
 
 print(f"Key: {key}")
 ```
+
+creds to h0nde
